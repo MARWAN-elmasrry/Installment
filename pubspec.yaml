@@ -1,0 +1,35 @@
+name: installment_app
+description: "حاسبة التقسيط - مؤسسة مصر مباشر. Offline installment calculator."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.5.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  sqflite: ^2.4.1
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  # The family name "AppFont" is what the code uses. To switch to Cairo or
+  # Tajawal, drop its .ttf files in assets/fonts/ and update the paths below.
+  fonts:
+    - family: AppFont
+      fonts:
+        - asset: assets/fonts/DejaVuSans.ttf
+        - asset: assets/fonts/DejaVuSans-Bold.ttf
+          weight: 700

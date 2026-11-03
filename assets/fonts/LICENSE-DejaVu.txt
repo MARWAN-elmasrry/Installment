@@ -1,0 +1,3 @@
+DejaVu Fonts are based on Bitstream Vera and are free to use, modify and
+redistribute (including embedding in applications). Full license text:
+https://dejavu-fonts.github.io/License.html
