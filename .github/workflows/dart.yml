@@ -1,7 +1,7 @@
 name: Build APK
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:      # lets you press "Run workflow" manually
   push:
     branches: [main, master]
 
@@ -21,14 +21,27 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Complete Android scaffolding
+      # Generate a fresh Android project with the installed Flutter version so
+      # Gradle / Android plugin / Kotlin versions always match, then restore
+      # our launcher icons and app name. The app id stays
+      # com.misrmobasher.installment (same as our MainActivity).
+      - name: Regenerate Android project
         run: |
-          flutter create . --platforms=android --org com.misrmobasher --project-name installment_app
-          rm -f test/widget_test.dart
-          rm -rf android/app/src/main/kotlin/com/misrmobasher/installment_app
+          cp -r android /tmp/our_android
+          flutter create --platforms=android --org com.misrmobasher --project-name installment /tmp/fresh_app
+          rm -rf android
+          cp -r /tmp/fresh_app/android android
+          for d in /tmp/our_android/app/src/main/res/mipmap-*; do cp -r "$d" android/app/src/main/res/; done
+          sed -i 's|android:label="[^"]*"|android:label="تقسيط مصر مباشر"|' android/app/src/main/AndroidManifest.xml
+          echo "--- gradle wrapper ---"
+          cat android/gradle/wrapper/gradle-wrapper.properties
+          echo "--- app id ---"
+          grep -n "installment" android/app/build.gradle* || true
+          find android/app/src/main/kotlin -name "*.kt"
 
       - run: flutter pub get
 
+      # Analyze and tests are reported in the log but do not block the APK.
       - name: Analyze
         run: flutter analyze
         continue-on-error: true
