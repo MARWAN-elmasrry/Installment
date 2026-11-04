@@ -1,4 +1,4 @@
-/// Display and parsing helpers (no Flutter dependency).
+// Display and parsing helpers (no Flutter dependency).
 
 const String currencyLabel = 'ج.م';
 

@@ -90,3 +90,18 @@ Open the folder in Android Studio or VS Code (Flutter + Dart plugins).
 To change a rate or fee, edit the constants at the top of
 `lib/services/installment_calculator.dart`, then update the matching test in
 `test/installment_calculator_test.dart`.
+
+## Build the APK online (no installation needed) - GitHub Actions
+
+1. Create a free GitHub account and a new **private** repository.
+2. Upload the contents of this folder (the files inside `installment_app`,
+   not the folder itself). Make sure `.github/workflows/build_apk.yml` is
+   included. If your browser skips hidden folders, use
+   "Add file -> Create new file", type the name
+   `.github/workflows/build_apk.yml` and paste the file's content.
+3. Open the **Actions** tab -> **Build APK** -> **Run workflow**.
+4. After 5-10 minutes open the finished run and download
+   **installment_app_apk** from the *Artifacts* section. Unzip it to get
+   `app-release.apk`.
+
+Analyze and test results appear in the run log. They do not block the APK.
