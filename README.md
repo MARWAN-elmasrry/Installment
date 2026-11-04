@@ -108,13 +108,16 @@ Analyze and test results appear in the run log. They do not block the APK.
 
 ## If your Flutter version complains about Gradle / AGP versions
 
-The Gradle files in `android/` are pinned to versions that were current when
-this project was written. Newer Flutter releases may require newer ones. Fix:
-delete `android/build.gradle.kts`, `android/settings.gradle.kts`,
-`android/gradle.properties`, `android/app/build.gradle.kts` and
-`android/gradle/wrapper/gradle-wrapper.properties`, run
-`flutter create . --platforms=android --org com.misrmobasher --project-name installment_app`,
-then in the new `android/app/build.gradle.kts` replace
-`com.misrmobasher.installment_app` with `com.misrmobasher.installment` and
-delete `android/app/src/main/kotlin/com/misrmobasher/installment_app/`.
-The GitHub Actions workflow already does all of this automatically.
+The Gradle files in `android/` were pinned to versions current when the project
+was written; newer Flutter releases may need newer ones. Fix:
+
+1. Generate a fresh project in another folder:
+   `flutter create --platforms=android --org com.misrmobasher --project-name installment ../fresh_app`
+2. Rename this project's `android/` folder to `android_old/`.
+3. Copy `../fresh_app/android` into this project as `android/`.
+4. Copy `android_old/app/src/main/res/mipmap-*` into `android/app/src/main/res/`
+   (restores the app icon) and set `android:label` in
+   `android/app/src/main/AndroidManifest.xml` to `تقسيط مصر مباشر`.
+
+The GitHub Actions workflow (`.github/workflows/build_apk.yml`) does exactly
+this automatically on every build.
