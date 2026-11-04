@@ -105,3 +105,16 @@ To change a rate or fee, edit the constants at the top of
    `app-release.apk`.
 
 Analyze and test results appear in the run log. They do not block the APK.
+
+## If your Flutter version complains about Gradle / AGP versions
+
+The Gradle files in `android/` are pinned to versions that were current when
+this project was written. Newer Flutter releases may require newer ones. Fix:
+delete `android/build.gradle.kts`, `android/settings.gradle.kts`,
+`android/gradle.properties`, `android/app/build.gradle.kts` and
+`android/gradle/wrapper/gradle-wrapper.properties`, run
+`flutter create . --platforms=android --org com.misrmobasher --project-name installment_app`,
+then in the new `android/app/build.gradle.kts` replace
+`com.misrmobasher.installment_app` with `com.misrmobasher.installment` and
+delete `android/app/src/main/kotlin/com/misrmobasher/installment_app/`.
+The GitHub Actions workflow already does all of this automatically.
